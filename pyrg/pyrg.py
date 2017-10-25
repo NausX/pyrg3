@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """pyrg - colorized Python's UnitTest Result Tool"""
-from ConfigParser import ConfigParser
+from configparser import ConfigParser
 from subprocess import Popen, PIPE
 from select import poll, POLLIN
 from optparse import OptionParser
@@ -96,7 +96,7 @@ def parse_lineone(line):
             results.append(get_color('fail') % "F")
         else:
             results.append(char)
-    return "".join(results)
+    return "".join([str(i) for i in results])
 
 
 def coloring_method(line):
@@ -115,6 +115,7 @@ def parse_unittest_result(lines):
         return ""
     results.append(parse_lineone(lines[0]) + '\n')
     for line in lines[1:]:
+        line = str(line)
         if unittests_ok.match(line):
             result = get_color('ok') % "OK"
         elif unittests_failed.match(line):
@@ -223,13 +224,13 @@ def main():
                 cmdline += [i for i in args[1:]]
             proc = Popen(cmdline, stdout=PIPE, stderr=PIPE)
             result = proc.communicate()[1]
-            print parse_unittest_result_verbose(result.splitlines(1))
+            print(parse_unittest_result_verbose(result.splitlines(1)))
         else:
             cmdline = ['python']
             cmdline += [i for i in args]
             proc = Popen(cmdline, stdout=PIPE, stderr=PIPE)
             result = proc.communicate()[1]
-            print parse_unittest_result(result.splitlines(1))
+            print(parse_unittest_result(result.splitlines(1)))
     else:
         poller = poll()
         poller.register(sys.stdin, POLLIN)
@@ -237,9 +238,9 @@ def main():
         if len(pollret) == 1 and pollret[0][1] & POLLIN:
             lines = sys.stdin.readlines()
             if check_verbose(lines[0]):
-                print parse_unittest_result_verbose(lines)
+                print(parse_unittest_result_verbose(lines))
             else:
-                print parse_unittest_result(lines)
+                print(parse_unittest_result(lines))
         else:
             parser.print_help()
 

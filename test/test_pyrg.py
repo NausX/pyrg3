@@ -1,5 +1,5 @@
 import unittest
-import ConfigParser
+import configparser
 import sys
 import os
 from tempfile import NamedTemporaryFile
@@ -288,7 +288,7 @@ fail = blue
 function = pink
 """
         temp = NamedTemporaryFile()
-        temp.file.write(config_example)
+        temp.file.write(config_example.encode())
         temp.file.flush()
         color_set = pyrg.set_configuration(temp.name)
         self.assertEqual('yellowgreen', color_set['ok'])
@@ -306,7 +306,7 @@ error = jihogeredd
 function = pink
 """
         temp = NamedTemporaryFile()
-        temp.file.write(config_example)
+        temp.file.write(config_example.encode())
         temp.file.flush()
         color_set = pyrg.set_configuration(temp.name)
         self.assertEqual('white', color_set['ok'])
@@ -340,7 +340,7 @@ fail =
 function =
 """
         temp = NamedTemporaryFile()
-        temp.file.write(config_example)
+        temp.file.write(config_example.encode())
         temp.file.flush()
         color_set = pyrg.set_configuration(temp.name)
         self.assertEqual(pyrg.PRINT_COLOR_SET_DEFAULT, color_set)
@@ -354,7 +354,7 @@ fail =
 function =
 """
         temp = NamedTemporaryFile()
-        temp.file.write(config_example)
+        temp.file.write(config_example.encode())
         temp.file.flush()
         color_set = pyrg.set_configuration(temp.name)
         self.assertEqual(pyrg.PRINT_COLOR_SET_DEFAULT, color_set)
@@ -366,7 +366,7 @@ function =
 function =
 """
         temp = NamedTemporaryFile()
-        temp.file.write(config_example)
+        temp.file.write(config_example.encode())
         temp.file.flush()
         color_set = pyrg.set_configuration(temp.name)
         self.assertEqual(pyrg.PRINT_COLOR_SET_DEFAULT, color_set)
@@ -377,7 +377,7 @@ function =
 [color]
 """
         temp = NamedTemporaryFile()
-        temp.file.write(config_example)
+        temp.file.write(config_example.encode())
         temp.file.flush()
         color_set = pyrg.set_configuration(temp.name)
         self.assertEqual(pyrg.PRINT_COLOR_SET_DEFAULT, color_set)
@@ -386,9 +386,9 @@ function =
     def test_config_empty(self):
         config_example = ""
         temp = NamedTemporaryFile()
-        temp.file.write(config_example)
+        temp.file.write(config_example.encode())
         temp.file.flush()
-        self.assertRaises(ConfigParser.NoSectionError,
+        self.assertRaises(configparser.NoSectionError,
                           pyrg.set_configuration, temp.name)
         temp.close()
 
