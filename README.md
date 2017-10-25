@@ -11,10 +11,12 @@ Install
 Just add it to your working directory?
 
 I haven't bother making a python package for it so far, you can just clone it
-and link the script or add to your PATH for now.
+and run `make install`.
 
 pip install git+git://github.com/NausX/pyrg3#egg=pyrg3 seems a solution but I
 never used it so far. I'll come back on this later.
+
+
 
 Require
 =======
